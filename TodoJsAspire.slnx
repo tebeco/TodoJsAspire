@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TodoJsAspire.ApiService/TodoJsAspire.ApiService.csproj" />
+    <Project Path="src/TodoJsAspire.AppHost/TodoJsAspire.AppHost.csproj" />
+    <Project Path="src/TodoJsAspire.ServiceDefaults/TodoJsAspire.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/TodoJsAspire.Tests/TodoJsAspire.Tests.csproj" />
+  </Folder>
+</Solution>
