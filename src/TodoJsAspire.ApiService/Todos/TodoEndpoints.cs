@@ -32,6 +32,14 @@ public static class TodoEndpoints
         group.MapDelete("/{id}", DeleteTodo)
             .WithName(nameof(DeleteTodo))
             .WithOpenApi();
+        
+        group.MapPost("/move-up/{id}", MoveTaskUp)
+            .WithName(nameof(MoveTaskUp))
+            .WithOpenApi();
+        
+        group.MapPost("/move-down/{id}", MoveTaskDown)
+            .WithName(nameof(MoveTaskDown))
+            .WithOpenApi();
     }
 
     public static async Task<Ok<IEnumerable<TodoDto>>> GetAllTodos(TodoDbContext db)
@@ -83,5 +91,55 @@ public static class TodoEndpoints
             .ExecuteDeleteAsync();
 
         return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
+    }
+
+    private static async Task<Results<Ok, NotFound>> MoveTaskUp(int id, TodoDbContext db)
+    {
+        var todo = await db.Todos.FirstOrDefaultAsync(model => model.Id == id);
+
+        if (todo is null)
+        {
+            return TypedResults.NotFound();
+        }
+        
+        var previousTodo = await db.Todos
+            .Where(t => t.Position < todo.Position)
+            .OrderByDescending(t => t.Position)
+            .FirstOrDefaultAsync();
+
+        if (previousTodo is null)
+        {
+            return TypedResults.Ok();
+        }
+        
+        (todo.Position, previousTodo.Position) = (previousTodo.Position, todo.Position);
+        await db.SaveChangesAsync();
+        
+        return TypedResults.Ok();
+    }
+    
+    private static async Task<Results<Ok, NotFound>> MoveTaskDown(int id, TodoDbContext db)
+    {
+        var todo = await db.Todos.FirstOrDefaultAsync(model => model.Id == id);
+
+        if (todo is null)
+        {
+            return TypedResults.NotFound();
+        }
+        
+        var previousTodo = await db.Todos
+            .Where(t => t.Position > todo.Position)
+            .OrderBy(t => t.Position)
+            .FirstOrDefaultAsync();
+
+        if (previousTodo is null)
+        {
+            return TypedResults.Ok();
+        }
+        
+        (todo.Position, previousTodo.Position) = (previousTodo.Position, todo.Position);
+        await db.SaveChangesAsync();
+        
+        return TypedResults.Ok();
     }
 }
