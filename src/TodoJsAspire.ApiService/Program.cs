@@ -2,9 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using TodoJsAspire.ApiService.Db;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("TodoDbContext") ?? throw new InvalidOperationException("Connection string 'TodoDbContext' not found.");
-
-builder.Services.AddDbContext<TodoDbContext>(options => options.UseNpgsql(connectionString));
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// var connectionString = builder.Configuration.GetConnectionString("TodoDbContext") ?? throw new InvalidOperationException("Connection string 'TodoDbContext' not found.");
+// builder.Services.AddDbContext<TodoDbContext>(options => options.UseNpgsql(connectionString));
+///////////////////
+// builder.Services.AddDbContext<YourDbContext>(options =>
+// {
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("postgresdb"));
+// });
+///////////////////
+builder.AddAzureNpgsqlDbContext<TodoDbContext>(connectionName: "postgresdb");
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
