@@ -36,4 +36,10 @@ if (app.Environment.IsDevelopment())
 app.MapDefaultEndpoints();
 app.MapTodoEndpoints();
 
+await using(var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<TodoDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
+
 app.Run();
