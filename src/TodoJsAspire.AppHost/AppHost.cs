@@ -7,7 +7,7 @@ var postgres = builder
         .RunAsContainer(pgBuilder =>
         {
             pgBuilder.WithLifetime(ContainerLifetime.Persistent);
-            pgBuilder.WithDataVolume();
+            pgBuilder.WithDataVolume("todojsaspire_postgres_data");
             pgBuilder.WithPgAdmin();
         });
 
