@@ -1,0 +1,64 @@
+@TodoApiBaseUrl = http://localhost:5331/api
+
+GET {{TodoApiBaseUrl}}/todos/
+
+###
+
+# Create a new todo
+POST {{TodoApiBaseUrl}}/todos/
+Content-Type: application/json
+
+{
+  "title": "Sample Todo1",
+  "isComplete": false,
+  "position": 1
+}
+
+###
+POST {{TodoApiBaseUrl}}/todos/
+Content-Type: application/json
+
+{
+  "title": "Sample Todo2",
+  "isComplete": false,
+  "position": 2
+}
+###
+POST {{TodoApiBaseUrl}}/todos/
+Content-Type: application/json
+
+{
+  "title": "Sample Todo3",
+  "isComplete": false,
+  "position": 3
+}
+
+###
+PUT {{TodoApiBaseUrl}}/todos/2
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated Todo",
+  "isComplete": true,
+  "position": 20
+}
+
+###
+
+POST {{TodoApiBaseUrl}}/todos/
+Content-Type: application/json
+
+{
+  "title": "Sample Todo no position",
+  "isComplete": false
+}
+###
+
+# Delete a todo
+DELETE {{TodoApiBaseUrl}}/todos/2
+
+###
+
+POST {{TodoApiBaseUrl}}/todos/move-up/3
+###

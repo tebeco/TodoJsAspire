@@ -11,7 +11,7 @@ public static class TodoEndpoints
 {
     public static void MapTodoEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/todo").WithTags(nameof(Todo));
+        var group = routes.MapGroup("/api/todos").WithTags(nameof(Todo));
 
         group.MapGet("/", GetAllTodos)
             .WithName(nameof(GetAllTodos))
@@ -81,7 +81,7 @@ public static class TodoEndpoints
         db.Todos.Add(todo);
         await db.SaveChangesAsync();
         
-        return TypedResults.Created($"/api/todo/{todo.Id}", todo.ToDto());
+        return TypedResults.Created($"/api/todos/{todo.Id}", todo.ToDto());
     }
     
     private static async Task<Results<Ok, NotFound>> DeleteTodo (int id, TodoDbContext db)
