@@ -44,7 +44,7 @@ public static class TodoEndpoints
 
     public static async Task<Ok<IEnumerable<TodoDto>>> GetAllTodos(TodoDbContext db)
     {
-        var todos = await db.Todos.ToListAsync();
+        var todos = await db.Todos.OrderBy(todo => todo.Position).ToListAsync();
         return TypedResults.Ok(todos.ToDtos());
     }
 
@@ -70,11 +70,15 @@ public static class TodoEndpoints
     }
 
     private static async Task<Created<TodoDto>> CreateTodo(CreateTodoDto createTodoDto, TodoDbContext db)
-    {
+    { 
+        var createAtPosition = await db.Todos.AnyAsync()
+            ? await db.Todos.MaxAsync(todo => todo.Position) + 1
+            : 1;
+        
         var todo = new Todo
         {
             IsComplete = createTodoDto.IsComplete,
-            Position = createTodoDto.Position,
+            Position = createAtPosition,
             Title = createTodoDto.Title,
         };
         
