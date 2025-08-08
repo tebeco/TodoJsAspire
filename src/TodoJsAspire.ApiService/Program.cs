@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using TodoJsAspire.ApiService.Db;
 
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("postgresdb"));
 // });
 ///////////////////
-builder.AddAzureNpgsqlDbContext<TodoDbContext>(connectionName: "postgresdb");
+builder.AddAzureNpgsqlDbContext<TodoDbContext>(connectionName: "todojsaspiredb");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Add service defaults & Aspire client integrations.
