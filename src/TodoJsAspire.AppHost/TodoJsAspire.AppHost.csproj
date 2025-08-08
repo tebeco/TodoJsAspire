@@ -19,6 +19,7 @@
     <PackageReference Include="Aspire.Hosting.Azure.PostgreSQL" Version="9.4.0" />
     <PackageReference Include="Aspire.Hosting.NodeJs" Version="9.4.0" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="9.4.0" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.NodeJS.Extensions" Version="9.7.1-beta.343" />
   </ItemGroup>
 
 </Project>

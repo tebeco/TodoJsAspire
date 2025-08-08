@@ -22,4 +22,9 @@ var apiService = builder.AddProject<Projects.TodoJsAspire_ApiService>("apiservic
     .WithReference(todoJsAspireDb)
     .WaitFor(todoJsAspireDb);
 
+var frontend = builder.AddViteApp("todo-frontend", workingDirectory: "../../todo-frontend")
+        .WithReference(apiService)
+        .WaitFor(apiService)
+        .WithPnpmPackageInstallation();
+
 builder.Build().Run();
