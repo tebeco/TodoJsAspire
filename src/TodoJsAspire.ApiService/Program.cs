@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using TodoJsAspire.ApiService.Db;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,7 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.MapDefaultEndpoints();
